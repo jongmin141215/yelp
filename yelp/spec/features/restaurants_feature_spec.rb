@@ -61,8 +61,13 @@ feature 'restaurants' do
 
     scenario 'removes a restaurant when a user clicks a delete link' do
       visit '/restaurants'
+      click_link 'Review KFC'
+      fill_in 'Thoughts', with: 'so so'
+      select '3', from: 'Rating'
+      click_button 'Leave Review'
       click_link "Delete KFC"
       expect(page).not_to have_content 'KFC'
+      expect(page).not_to have_content 'so so'
       expect(page).to have_content 'Restaurant deleted successfully'
     end
   end
