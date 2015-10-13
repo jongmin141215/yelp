@@ -1,18 +1,20 @@
 class RestaurantsController < ApplicationController
   def index
     @restaurants = Restaurant.all
-    p 'index ', params
   end
 
   def new
     @restaurant = Restaurant.new
-    p 'new ', params
   end
 
   def create
-    Restaurant.create(restaurant_params)
-    p 'create ', params
-    redirect_to '/restaurants'
+    @restaurant = Restaurant.new(restaurant_params)
+    if @restaurant.save
+      p 'create ', params
+      redirect_to restaurants_path
+    else
+      render 'new'
+    end
   end
 
   def show
@@ -22,7 +24,6 @@ class RestaurantsController < ApplicationController
 
   def edit
     @restaurant = Restaurant.find(params[:id])
-    p 'edit ', params
   end
 
   def update
